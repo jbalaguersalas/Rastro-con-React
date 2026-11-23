@@ -1,10 +1,8 @@
-// Parte 0: una página mínima. En la Parte 1 aquí irá el RouterProvider
+import { RouterProvider } from "react-router";
+import { router } from "./router";
+
 function App() {
-  return (
-    <main>
-      <h1>Rastro</h1>
-    </main>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
