@@ -36,6 +36,16 @@ export const api = createApi({
       query: (body) => ({ url: "/listings", method: "POST", body }),
       invalidatesTags: ["Listing"],
     }),
+    // PATCH /listings/:id  (solo el precio)
+    updatePrice: builder.mutation<Listing, { id: string; price: number }>({
+      query: ({ id, price }) => ({ url: `/listings/${id}`, method: "PATCH", body: { price } }),
+      invalidatesTags: ["Listing"],
+    }),
+    // DELETE /listings/:id. No usamos lo que devuelve: void
+    deleteListing: builder.mutation<void, string>({
+      query: (id) => ({ url: `/listings/${id}`, method: "DELETE" }),
+      invalidatesTags: ["Listing"],
+    }),
   }),
 });
 
@@ -45,4 +55,6 @@ export const {
   useGetOffersQuery,
   useCreateOfferMutation,
   useCreateListingMutation,
+  useUpdatePriceMutation,
+  useDeleteListingMutation,
 } = api;
