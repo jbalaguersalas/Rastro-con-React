@@ -2,12 +2,15 @@ import { Link, useParams } from "react-router";
 import { useGetListingQuery } from "../../app/api";
 import { CATEGORY_LABELS, formatPrice } from "../../app/labels";
 import { Loading } from "../../components/ui/Loading";
+import { OfferForm } from "../offers/OfferForm";
 import { OfferList } from "../offers/OfferList";
+import { useCurrentUser } from "../users/CurrentUserContext";
 import styles from "./ListingDetailPage.module.css";
 import { StatusBadge } from "./StatusBadge";
 
 export function ListingDetailPage() {
   const { id = "" } = useParams();
+  const { user } = useCurrentUser();
   const { data: listing, isLoading, isError } = useGetListingQuery(id);
 
   if (isLoading) return <Loading />;
@@ -21,6 +24,8 @@ export function ListingDetailPage() {
       </>
     );
   }
+
+  const isSeller = listing.seller.id === user.id;
 
   return (
     <>
@@ -51,6 +56,11 @@ export function ListingDetailPage() {
           </dl>
         </article>
         <aside className={styles.side}>
+          {isSeller ? null : listing.status === "AVAILABLE" ? (
+            <OfferForm listingId={listing.id} />
+          ) : (
+            <p className="loading">Este anuncio ya no admite ofertas.</p>
+          )}
           <OfferList listingId={listing.id} />
         </aside>
       </div>
