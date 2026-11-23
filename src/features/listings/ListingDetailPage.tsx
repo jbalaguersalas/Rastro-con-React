@@ -6,6 +6,7 @@ import { OfferForm } from "../offers/OfferForm";
 import { OfferList } from "../offers/OfferList";
 import { useCurrentUser } from "../users/CurrentUserContext";
 import styles from "./ListingDetailPage.module.css";
+import { SellerPanel } from "./SellerPanel";
 import { StatusBadge } from "./StatusBadge";
 
 export function ListingDetailPage() {
@@ -56,7 +57,9 @@ export function ListingDetailPage() {
           </dl>
         </article>
         <aside className={styles.side}>
-          {isSeller ? null : listing.status === "AVAILABLE" ? (
+          {isSeller ? (
+            <SellerPanel listing={listing} />
+          ) : listing.status === "AVAILABLE" ? (
             <OfferForm listingId={listing.id} />
           ) : (
             <p className="loading">Este anuncio ya no admite ofertas.</p>
