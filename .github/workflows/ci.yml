@@ -1,0 +1,58 @@
+# CI: revisa el código en cada push a main y en cada PR hacia main.
+# Cada job es un "check" que sale con ✅ o ❌ en GitHub.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  # Check 1: revisa el index.html
+  htmlhint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+      - name: Preparar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Revisar el HTML con HTMLHint
+        run: npx --yes htmlhint@1 "**/*.html" --ignore "node_modules/**,dist/**,build/**,coverage/**"
+
+  # Check 2: revisa el código TypeScript (tu script "lint")
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+      - name: Preparar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - name: Instalar dependencias
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+
+  # Check 3: comprueba que la web compila (tsc + vite build)
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+      - name: Preparar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - name: Instalar dependencias
+        run: npm ci
+      - name: Build
+        run: npm run build
