@@ -16,7 +16,7 @@ export function OfferList({ listingId }: OfferListProps) {
       <h2>Ofertas ({offers.length})</h2>
       {offers.length === 0 && <p className="loading">Todavía no hay ofertas.</p>}
       {offers.map((offer) => (
-        <div key={offer.id} className={styles.offer}>
+        <div key={offer._id} className={styles.offer}>
           <span>{offer.buyer.name}</span>
           <strong>{formatPrice(offer.amount)}</strong>
           <StatusBadge status={offer.status} />

@@ -22,14 +22,8 @@ export function OfferForm({ listingId }: OfferFormProps) {
     }
     setError(null);
     try {
-      // json-server no pone nada: le mandamos la oferta entera
-      await createOffer({
-        listingId,
-        amount: Number(amount),
-        status: "PENDING",
-        createdAt: new Date().toISOString(),
-        buyer: user,
-      }).unwrap();
+      // La API pone el estado, la fecha y el nombre del comprador
+      await createOffer({ listingId, buyerId: user.id, amount: Number(amount) }).unwrap();
       setAmount("");
     } catch (e) {
       setError(getErrorMessage(e));

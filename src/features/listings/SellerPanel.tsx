@@ -22,7 +22,7 @@ export function SellerPanel({ listing }: SellerPanelProps) {
     e.preventDefault();
     setError(null);
     try {
-      await updatePrice({ id: listing.id, price: Number(price) }).unwrap();
+      await updatePrice({ id: listing._id, price: Number(price) }).unwrap();
     } catch (e) {
       setError(getErrorMessage(e));
     }
@@ -31,7 +31,7 @@ export function SellerPanel({ listing }: SellerPanelProps) {
   async function remove() {
     setError(null);
     try {
-      await deleteListing(listing.id).unwrap();
+      await deleteListing(listing._id).unwrap();
       navigate("/"); // el anuncio ya no existe
     } catch (e) {
       setError(getErrorMessage(e));
