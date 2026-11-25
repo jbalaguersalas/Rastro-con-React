@@ -60,11 +60,11 @@ export function ListingDetailPage() {
           {isSeller ? (
             <SellerPanel listing={listing} />
           ) : listing.status === "AVAILABLE" ? (
-            <OfferForm listingId={listing.id} />
+            <OfferForm listingId={listing._id} />
           ) : (
             <p className="loading">Este anuncio ya no admite ofertas.</p>
           )}
-          <OfferList listingId={listing.id} />
+          <OfferList listingId={listing._id} />
         </aside>
       </div>
     </>

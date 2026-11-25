@@ -32,15 +32,9 @@ export function NewListingPage() {
   async function onSubmit(data: FormData) {
     setApiError(null);
     try {
-      const created = await createListing({
-        ...data,
-        status: "AVAILABLE",
-        views: 0,
-        publishedAt: new Date().toISOString(),
-        seller: user,
-        attributes: {},
-      }).unwrap();
-      navigate(`/listings/${created.id}`); // json-server le ha puesto el id
+      // La API pone el estado, la fecha, las visitas y el nombre del vendedor
+      const created = await createListing({ ...data, sellerId: user.id, attributes: {} }).unwrap();
+      navigate(`/listings/${created._id}`); // MongoDB le ha puesto el _id
     } catch (e) {
       setApiError(getErrorMessage(e));
     }

@@ -6,13 +6,13 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL }),
   tagTypes: ["Listing", "Offer"],
   endpoints: (builder) => ({
-    // GET /listings?category=Cars&city=Valencia&price:lte=500&_sort=-publishedAt
+    // GET /listings?category=Cars&city=Valencia&maxPrice=500
     getListings: builder.query<ListingSummary[], ListingFilters>({
       query: ({ category, city, maxPrice }) => ({
         url: "/listings",
         // params: RTK Query monta el ?category=...&city=... (y se salta los que son undefined)
-        // price:lte = precio menor o igual. _sort=-publishedAt = del más nuevo al más viejo
-        params: { category, city, "price:lte": maxPrice, _sort: "-publishedAt" },
+        // La API ya los devuelve ordenados del más nuevo al más viejo
+        params: { category, city, maxPrice },
       }),
       providesTags: ["Listing"],
     }),
@@ -21,9 +21,9 @@ export const api = createApi({
       query: (id) => `/listings/${id}`,
       providesTags: ["Listing"],
     }),
-    // GET /offers?listingId=listing-1&_sort=-createdAt
+    // GET /listings/:id/offers
     getOffers: builder.query<Offer[], string>({
-      query: (listingId) => ({ url: "/offers", params: { listingId, _sort: "-createdAt" } }),
+      query: (listingId) => `/listings/${listingId}/offers`,
       providesTags: ["Offer"],
     }),
     // POST /offers

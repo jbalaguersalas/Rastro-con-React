@@ -34,7 +34,7 @@ export function ListingsPage() {
       {listings?.length === 0 && <p className="loading">No hay anuncios con esos filtros.</p>}
       <div className="grid">
         {listings?.map((listing) => (
-          <ListingCard key={listing.id} listing={listing} />
+          <ListingCard key={listing._id} listing={listing} />
         ))}
       </div>
     </>

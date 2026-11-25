@@ -10,7 +10,7 @@ type ListingCardProps = {
 
 export function ListingCard({ listing }: ListingCardProps) {
   return (
-    <Link to={`/listings/${listing.id}`} className={styles.card}>
+    <Link to={`/listings/${listing._id}`} className={styles.card}>
       <div className={`${styles.image} ${styles[listing.category]}`}>
         {CATEGORY_LABELS[listing.category]}
       </div>
