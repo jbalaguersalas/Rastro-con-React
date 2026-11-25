@@ -25,6 +25,14 @@ Antes de algunas peticiones, el navegador manda una pregunta previa (`OPTIONS`, 
 
 ## Pregunta 5
 
+Lo que he visto en el Seat Ibiza, en la web de Netlify con la API de Render:
+
+| Paso | Visitas |
+|---|---|
+| Entro en la ficha | 342 |
+| Vuelvo al listado y entro otra vez | 342 (no sube) |
+| Recargo con F5 | 343 (sube una) |
+
 Al entrar la primera vez, `useGetListingQuery(id)` hace `GET /listings/:id` y la API suma una visita. RTK Query guarda la respuesta en la caché del store.
 
 Al volver al listado y entrar otra vez, RTK Query ya tiene ese anuncio en la caché (guarda los datos sin usar 60 segundos, `keepUnusedDataFor`). Usa lo que tiene y **no hace la petición**: la API no se entera y las visitas no suben. En la pestaña Red no aparece ningún `GET /listings/:id` nuevo.
