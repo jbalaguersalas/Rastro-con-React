@@ -5,7 +5,7 @@ Web de compraventa de segunda mano hecha con React, TypeScript, Redux Toolkit (R
 ## Direcciones
 
 - Web (Netlify): https://rastro-jbalaguer.netlify.app
-- API (Render): https://api-rastro-lo94.onrender.com/api
+- API (Render): https://api-rastro-lo94.onrender.com/api/listings
 
 La API es la de Express del repositorio `api-rastro`, con los datos en MongoDB Atlas. La primera petición puede tardar un minuto: Render duerme la API si nadie la usa.
 
